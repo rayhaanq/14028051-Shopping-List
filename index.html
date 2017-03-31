@@ -2,26 +2,30 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<script
-			  src="https://code.jquery.com/jquery-3.2.1.js"
-			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-			  crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
 
 <div data-role="page">
   <div data-role="header">
-    <h1>Shopping List</h1>
+    <h1 class="pageTitle">Shopping List</h1>
   </div>
 
-  <div data-role="main" class="ui-content">
-    <p>I Am Now A Mobile Developer!!</p>
-  </div>
+<div data-role="main" class="ui-content">
+  <ul data-role="listview">
+    <li><a href="#">Home</a></li>
+  </ul>
+</div>
 
-  <div data-role="footer">
-    <h1>Nav Bar</h1>
+  <div data-role="footer" style="text-align:center;">
+
+
+    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
+
   </div>
 </div>
 
