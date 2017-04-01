@@ -1,0 +1,37 @@
+
+
+.footer{
+  text-align: center;
+}
+
+#add_item_popup{
+    padding: 10px 20px;
+}
+
+#addItemSubmit{
+  width: 75%;
+  margin: auto;
+}
+
+#addItemTitle{
+  text-align: center;
+}
+
+#qtyContainer  {
+  width: 60%;
+  margin: auto;
+}
+
+#qtyField {
+  text-align: center;
+}
+
+#itemNameField{
+  text-align: center;
+}
+
+div.ui-input-text {
+  margin-left: 10px;
+  margin-right: 10px;
+
+}

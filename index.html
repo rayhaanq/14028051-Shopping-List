@@ -4,55 +4,80 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="style.css">
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
 
-<div data-role="page" id="home">
-  <div data-role="header">
-    <h1 class="pageTitle">Shopping List App</h1>
+
+  <!-- HOME PAGE -->
+  <div data-role="page" id="home">
+    <div data-role="header">
+      <h1>Shopping List App</h1>
+    </div>
+
+  <div data-role="main" class="ui-content">
+    <ul data-role="listview" data-split-icon="delete">
+      <li><a href="#">Home</a> <a href="#"></a></li>
+    </ul>
   </div>
 
-<div data-role="main" class="ui-content">
-  <ul data-role="listview" data-split-icon="delete">
-    <li><a href="#">Home</a> <a href="#"></a></li>
-  </ul>
-</div>
-
-  <div data-role="footer" style="text-align:center;">
+    <div class="footer" data-role="footer" >
 
 
-    <a href="#pcreate_list" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
+      <a href="#pcreate_list" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
 
-  </div>
-</div>
-
-
-<!-- CREATE LIST PAGE -->
-
-<div data-role="page" id="pcreate_list">
-  <div data-role="header">
-    <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"></a>
-    <h1 class="pageTitle">Create List</h1>
-    <input name="list_name" placeholder="Name of list">
+    </div>
   </div>
 
-<div data-role="main" class="ui-content">
-  <ul data-role="listview" data-split-icon="delete">
-    <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
 
-      <a href="#"></a></li>
-  </ul>
-</div>
+  <!-- CREATE LIST PAGE -->
 
-  <div data-role="footer" style="text-align:center;">
+  <div data-role="page" id="pcreate_list">
+    <div data-role="header">
+      <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"></a>
+      <h1 class="pageTitle">Create List</h1>
+      <input name="list_name" placeholder="Name of list">
+    </div>
+
+  <div data-role="main" class="ui-content">
+    <ul data-role="listview" data-split-icon="delete">
+      <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
+
+        <a href="#"></a></li>
+    </ul>
+  </div>
+
+    <div class="footer" data-role="footer" >
 
 
-    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
+      <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
+
+    </div>
+
+    <!-- ADD ITEM DIALOG -->
+
+    <div data-role="popup" id="add_item_popup" data-transition="slidedown">
+
+      <form>
+
+
+          <h3 id="addItemTitle">Add Item</h3>
+
+          <input id="itemNameField" name="item_name" placeholder="Item name">
+          <div id="qtyContainer">
+            <input id="qtyField" name="quantity" type="number" placeholder="Quantity" >
+          </div>
+          <button id="addItemSubmit" type="submit" class="ui-btn ui-btn-b ui-shadow ui-corner-all">Add</a>
+
+
+
+      </form>
+    </div>
 
   </div>
-</div>
+
 
 </body>
 </html>
