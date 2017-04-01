@@ -4,15 +4,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-<link rel="stylesheet" type="text/css" href="style.css">
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
 
-<div data-role="page">
+<div data-role="page" id="home">
   <div data-role="header">
-    <h1 class="pageTitle">Shopping List</h1>
+    <h1 class="pageTitle">Shopping List App</h1>
   </div>
 
 <div data-role="main" class="ui-content">
@@ -24,7 +23,33 @@
   <div data-role="footer" style="text-align:center;">
 
 
-    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
+    <a href="#pcreate_list" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
+
+  </div>
+</div>
+
+
+<!-- CREATE LIST PAGE -->
+
+<div data-role="page" id="pcreate_list">
+  <div data-role="header">
+    <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"></a>
+    <h1 class="pageTitle">Create List</h1>
+    <input name="list_name" placeholder="Name of list">
+  </div>
+
+<div data-role="main" class="ui-content">
+  <ul data-role="listview" data-split-icon="delete">
+    <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
+
+      <a href="#"></a></li>
+  </ul>
+</div>
+
+  <div data-role="footer" style="text-align:center;">
+
+
+    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
 
   </div>
 </div>
