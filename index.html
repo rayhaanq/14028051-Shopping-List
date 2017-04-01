@@ -71,8 +71,8 @@
 
           <!-- <input id="itemNameField" name="item_name" placeholder="Item name"> -->
 
-          <input id="itemNameField" type="search" placeholder="Item name"/>
-          <ul id="itemNameList" name="item_name" data-role="listview" data-filter="true" data-filter-reveal="true"  data-inset="true" data-input="#itemNameField">
+          <input id="itemNameField" type="search" placeholder="Item name" />
+          <ul id="itemNameList" name="item_name" data-theme="b" data-icon="false" data-role="listview" data-filter="true" data-filter-reveal="true"  data-inset="true" data-input="#itemNameField">
             <li><a href="#" onclick="setItemName(this)">Apples</a></li>
             <li><a href="#" onclick="setItemName(this)">Bananas</a></li>
             <li><a href="#" onclick="setItemName(this)">Cherries</a></li>
@@ -84,9 +84,12 @@
           <div id="qtyContainer">
             <input id="qtyField" name="quantity" type="number" placeholder="Quantity" >
           </div>
-          <button id="addItemSubmit" type="submit" class="ui-btn ui-btn-b ui-shadow ui-corner-all">Add</a>
+          <div style="text-align:center;"><p id="invalidItem"></p></div>
+          <button id="addItemSubmit" type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="addItem()">Add</a>
 
 
+
+</div>
 
       </form>
     </div>
