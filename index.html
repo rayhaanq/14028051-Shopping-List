@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="style.css">
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="custom.js"></script>
+
+
+
 </head>
 <body>
 
@@ -65,7 +69,18 @@
 
           <h3 id="addItemTitle">Add Item</h3>
 
-          <input id="itemNameField" name="item_name" placeholder="Item name">
+          <!-- <input id="itemNameField" name="item_name" placeholder="Item name"> -->
+
+          <input id="itemNameField" type="search" placeholder="Item name"/>
+          <ul id="itemNameList" name="item_name" data-role="listview" data-filter="true" data-filter-reveal="true"  data-inset="true" data-input="#itemNameField">
+            <li><a href="#" onclick="setItemName(this)">Apples</a></li>
+            <li><a href="#" onclick="setItemName(this)">Bananas</a></li>
+            <li><a href="#" onclick="setItemName(this)">Cherries</a></li>
+            <li><a href="#">Cranberries</a></li>
+            <li><a href="#">Grapes</a></li>
+            <li><a href="#">Oranges</a></li>
+          </ul>
+
           <div id="qtyContainer">
             <input id="qtyField" name="quantity" type="number" placeholder="Quantity" >
           </div>
