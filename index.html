@@ -22,8 +22,8 @@
     </div>
 
   <div data-role="main" class="ui-content">
-    <ul data-role="listview" data-split-icon="delete">
-      <li><a href="#">Home</a> <a href="#"></a></li>
+    <ul id="listslist" data-role="listview" data-split-icon="delete" data-count-theme="b"  data-inset="true">
+
     </ul>
   </div>
 
@@ -33,6 +33,15 @@
       <a href="#pcreate_list" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
 
     </div>
+
+    <div data-role="popup" id="confirm_del_list_popup" data-position-to="window" data-transition="pop">
+
+      <h3>Delete item?</h3>
+
+      <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="deleteList()">Yes</button>
+      <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#confirm_del_list_popup').popup('close');">No</button>
+    </div>
+
   </div>
 
 
@@ -42,7 +51,7 @@
     <div data-role="header">
       <a href="#home" data-role="button" data-theme="b" data-icon="home" data-iconpos="notext"></a>
       <h1 class="pageTitle">Create List</h1>
-      <input name="list_name" placeholder="Name of list">
+      <input id="listNameField" type="text" name="list_name" placeholder="Name of list">
     </div>
 
   <div data-role="main" class="ui-content">
@@ -67,7 +76,14 @@
 
       <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
 
-      <!-- CONFIRM DELETE POPUP -->
+      <div data-role="popup" id="no_name_popup" data-position-to="window" data-transition="pop">
+
+        <p>Please add a list name</p>
+
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#no_name_popup').popup('close');">Ok</button>
+      </div>
+
+      <!-- CONFIRM ITEM DELETE POPUP -->
         <div data-role="popup" id="confirm_del_popup" data-position-to="window" data-transition="pop">
 
           <h3>Delete item?</h3>
@@ -110,6 +126,31 @@
 
 
   </div>
+
+  <!-- VIEW LIST PAGE -->
+
+  <div data-role="page" id="pview_list">
+    <div data-role="header">
+      <a href="#home" data-role="button" data-theme="b" data-icon="home" data-iconpos="notext"></a>
+      <h1 id="viewListPageTitle"></h1>
+    </div>
+
+  <div data-role="main" class="ui-content">
+    <div>
+
+    <ul data-role="listview" data-count-theme="b" id="itemList" data-inset="true">
+
+    </ul>
+  </div>
+
+  </div>
+
+    <div class="footer" data-role="footer" >
+
+
+
+
+    </div>
 
   </div>
 

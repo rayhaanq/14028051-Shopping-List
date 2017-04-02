@@ -3,6 +3,8 @@
 
 $(document).on('pageinit', function(){
 
+  lists = {};
+
   $("input[id=itemNameField]").focus(function() {
   $("#itemNameList").removeClass("ui-screen-hidden");
 
@@ -16,6 +18,20 @@ $(document).on('pageinit', function(){
   // $("input[id=itemNameField]").focusout(function() {
   //   $("#itemNameList").addClass("ui-screen-hidden");
   // });
+
+});
+
+$(document).on("pagebeforeshow", "#home", function(){
+
+  generateLists();
+
+
+});
+
+$(document).on("pagebeforeshow", "#pcreate_list", function(){
+
+  generateItemList();
+
 
 });
 
@@ -42,7 +58,46 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 });
 
+function generateLists(){
 
+    var output = "";
+    $("#listslist").empty();
+
+    //var itemIdNumber = 0;
+    for (var list in lists){
+      output += "<li><a class='" + list + "' href='#' onclick=''>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list]).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
+
+      //itemIdNumber += 1;
+    }
+    $("#listslist").append(output);
+    $("#listslist").listview("refresh");
+
+}
+
+function deleteList(){
+  $(objToDelete).closest("li").remove();
+  delete lists[getName(objToDelete)];
+  $('#confirm_del_list_popup').popup('close');
+}
+
+
+function createList(){
+
+  listName = $("#listNameField").val().trim();
+  if (!listName){
+
+    $("#no_name_popup").popup("open");
+  } else {
+
+    lists[listName] = chosenItems;
+    $.mobile.changePage( "#home");
+
+    $( "#listNameField" ).val("");
+    chosenItems = {};
+  }
+
+
+}
 
 function addItem(){
   itemName = $("#itemNameField").val().trim();
@@ -61,7 +116,6 @@ function addItem(){
   //   });
   } else {
     chosenItems[itemName] = quantity;
-    //alert(JSON.stringify(chosenItems));
 
     $( "#add_item_popup" ).popup("close");
 
@@ -96,11 +150,11 @@ function prepareEditItem(obj){
 
   $( "#add_item_popup" ).find("#addItemTitle").text("Edit item");
   $( "#add_item_popup" ).find("#addItemSubmit").text("Save");
-  $( "#add_item_popup" ).find("#itemNameField").val(getItemName(obj));
-  $( "#add_item_popup" ).find("#qtyField").val(chosenItems[getItemName(obj)]);
+  $( "#add_item_popup" ).find("#itemNameField").val(getName(obj));
+  $( "#add_item_popup" ).find("#qtyField").val(chosenItems[getName(obj)]);
   $( "#add_item_popup" ).popup("open");
   $( "#add_item_popup" ).find("#addItemSubmit").attr('onclick', 'editItem()');
-  itemToEdit = getItemName(obj);
+  itemToEdit = getName(obj);
 
 }
 
@@ -134,7 +188,6 @@ function editItem (){
     $("#itemNameField").val("");
     $("#qtyField").val("");
 
-    alert(JSON.stringify(chosenItems));
   }
 
 
@@ -142,7 +195,7 @@ function editItem (){
 }
 
 
-function getItemName(obj){
+function getName(obj){
   var classes= $(obj).attr("class");
 
   classes = classes.substring(0, classes.indexOf(' '));
@@ -156,8 +209,7 @@ function deleteItem() {
 
 
   $(objToDelete).closest("li").remove();
-  delete chosenItems[getItemName(objToDelete)];
-  alert(JSON.stringify(chosenItems));
+  delete chosenItems[getName(objToDelete)];
   $('#confirm_del_popup').popup('close');
 
 

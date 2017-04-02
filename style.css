@@ -12,6 +12,14 @@
     padding: 10px 20px;
 }
 
+#no_name_popup{
+    padding: 10px 20px;
+}
+
+#confirm_del_list_popup{
+    padding: 10px 20px;
+}
+
 #addItemSubmit{
   width: 75%;
   margin: auto;
