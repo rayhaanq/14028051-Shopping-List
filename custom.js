@@ -67,11 +67,21 @@ function generateItemList(){
   var output = "";
   $("#itemList").empty();
 
+  //var itemIdNumber = 0;
   for (var item in chosenItems){
-    output += "<li><a href='#'>" + item + "<span class='ui-li-count'>x" + chosenItems[item] + "</span></a><a href='#'></a></li>";
+
+    output += "<li><a href='#' >" + item + "<span class='ui-li-count'>x" + chosenItems[item] + "</span></a><a id='" + item + "' href='#' onclick='deleteItem(this)'></a></li>";
+
+    //itemIdNumber += 1;
   }
   $("#itemList").append(output);
   $("#itemList").listview("refresh");
+}
+
+function deleteItem(obj) {
+  $(obj).closest("li").remove();
+
+  delete chosenItems[$(obj).attr("id")];
 }
 
 function setItemName(obj){

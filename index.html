@@ -40,23 +40,33 @@
 
   <div data-role="page" id="pcreate_list">
     <div data-role="header">
-      <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"></a>
+      <a href="#home" data-role="button" data-theme="b" data-icon="home" data-iconpos="notext"></a>
       <h1 class="pageTitle">Create List</h1>
       <input name="list_name" placeholder="Name of list">
     </div>
 
   <div data-role="main" class="ui-content">
-    <ul data-role="listview" data-split-icon="delete" id="itemList">
-      <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
+    <div>
 
-        <a href="#"></a></li>
+
+    <ul data-role="listview" data-split-icon="delete" data-count-theme="b" data-split-theme="b" id="itemList" data-inset="true">
+      <!-- <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
+
+        <a href="#"></a></li> -->
     </ul>
+  </div>
+
+<div>
+
+
+  <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
+</div>
   </div>
 
     <div class="footer" data-role="footer" >
 
+      <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
 
-      <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
 
     </div>
 
@@ -87,9 +97,7 @@
           <div style="text-align:center;"><p id="invalidItem"></p></div>
           <button id="addItemSubmit" type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="addItem()">Add</a>
 
-
-
-</div>
+      </div>
 
       </form>
     </div>
