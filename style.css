@@ -8,6 +8,10 @@
     padding: 10px 20px;
 }
 
+#confirm_del_popup{
+    padding: 10px 20px;
+}
+
 #addItemSubmit{
   width: 75%;
   margin: auto;

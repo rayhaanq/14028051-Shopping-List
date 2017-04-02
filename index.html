@@ -49,7 +49,7 @@
     <div>
 
 
-    <ul data-role="listview" data-split-icon="delete" data-count-theme="b" data-split-theme="b" id="itemList" data-inset="true">
+    <ul data-role="listview" data-split-icon="delete" data-count-theme="b" id="itemList" data-inset="true">
       <!-- <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
 
         <a href="#"></a></li> -->
@@ -67,10 +67,19 @@
 
       <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
 
+      <!-- CONFIRM DELETE POPUP -->
+        <div data-role="popup" id="confirm_del_popup" data-position-to="window" data-transition="pop">
+
+          <h3>Delete item?</h3>
+
+          <button id="confirmDeleteButton" type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="deleteItem()">Yes</button>
+          <button id="cancelDeleteButton" type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="closeConfirmDelete()">No</button>
+        </div>
+
 
     </div>
 
-    <!-- ADD ITEM DIALOG -->
+    <!-- ADD ITEM POPUP -->
 
     <div data-role="popup" id="add_item_popup" data-transition="slidedown">
 
@@ -95,12 +104,12 @@
             <input id="qtyField" name="quantity" type="number" placeholder="Quantity" >
           </div>
           <div style="text-align:center;"><p id="invalidItem"></p></div>
-          <button id="addItemSubmit" type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="addItem()">Add</a>
-
-      </div>
-
+          <button id="addItemSubmit" type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="addItem()">Add</button>
       </form>
     </div>
+
+
+  </div>
 
   </div>
 

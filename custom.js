@@ -70,7 +70,7 @@ function generateItemList(){
   //var itemIdNumber = 0;
   for (var item in chosenItems){
 
-    output += "<li><a href='#' >" + item + "<span class='ui-li-count'>x" + chosenItems[item] + "</span></a><a id='" + item + "' href='#' onclick='deleteItem(this)'></a></li>";
+    output += "<li><a href='#' >" + item + "<span class='ui-li-count'>x" + chosenItems[item] + "</span></a><a id='" + item + "' href='#confirm_del_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
 
     //itemIdNumber += 1;
   }
@@ -78,11 +78,25 @@ function generateItemList(){
   $("#itemList").listview("refresh");
 }
 
-function deleteItem(obj) {
-  $(obj).closest("li").remove();
+objToDelete = 0;
 
-  delete chosenItems[$(obj).attr("id")];
+function deleteItem() {
+
+
+  $(objToDelete).closest("li").remove();
+  delete chosenItems[$(objToDelete).attr("id")];
+  $('#confirm_del_popup').popup('close');
+
 }
+
+function setObjectToDelete(obj){
+  objToDelete = obj;
+}
+
+function closeConfirmDelete(){
+  $('#confirm_del_popup').popup('close');
+}
+
 
 function setItemName(obj){
 
