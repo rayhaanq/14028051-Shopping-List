@@ -42,6 +42,11 @@
   text-align: center;
 }
 
+.strike_through {
+  text-decoration: line-through !important;
+  background-color: rgb(190, 190, 190) !important;
+}
+
 div.ui-input-text {
   margin-left: 10px;
   margin-right: 10px;

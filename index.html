@@ -49,7 +49,7 @@
 
   <div data-role="page" id="pcreate_list">
     <div data-role="header">
-      <a href="#home" data-role="button" data-theme="b" data-icon="home" data-iconpos="notext"></a>
+
       <h1 class="pageTitle">Create List</h1>
       <input id="listNameField" type="text" name="list_name" placeholder="Name of list">
     </div>
@@ -68,13 +68,15 @@
 <div>
 
 
-  <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
+
 </div>
   </div>
 
     <div class="footer" data-role="footer" >
 
-      <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
+      <a href="#home" data-role="button" data-theme="a" data-icon="back" >Back</a>
+      <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
+      <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
 
       <div data-role="popup" id="no_name_popup" data-position-to="window" data-transition="pop">
 
@@ -111,9 +113,6 @@
             <li><a href="#" onclick="setItemName(this)">Apples</a></li>
             <li><a href="#" onclick="setItemName(this)">Bananas</a></li>
             <li><a href="#" onclick="setItemName(this)">Cherries</a></li>
-            <li><a href="#">Cranberries</a></li>
-            <li><a href="#">Grapes</a></li>
-            <li><a href="#">Oranges</a></li>
           </ul>
 
           <div id="qtyContainer">
@@ -131,14 +130,14 @@
 
   <div data-role="page" id="pview_list">
     <div data-role="header">
-      <a href="#home" data-role="button" data-theme="b" data-icon="home" data-iconpos="notext"></a>
+
       <h1 id="viewListPageTitle"></h1>
     </div>
 
   <div data-role="main" class="ui-content">
     <div>
 
-    <ul data-role="listview" data-count-theme="b" id="itemList" data-inset="true">
+    <ul data-role="listview"  data-icon='false' data-count-theme="b" id="itemViewList" data-inset="true">
 
     </ul>
   </div>
@@ -147,7 +146,12 @@
 
     <div class="footer" data-role="footer" >
 
-
+      <a href="#home" data-role="button" data-theme="a" data-icon="back" class="">Back</a>
+      <button onclick="" class="ui-btn ui-btn-a  ui-corner-all ui-shadow ui-icon-delete ui-btn-icon-right">Delete List</button>
+      <button onclick="" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-edit ui-btn-icon-right">Edit List</button>
+      <!-- <p>
+        In THIS PAGE
+      </p> -->
 
 
     </div>

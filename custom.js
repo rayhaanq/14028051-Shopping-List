@@ -1,9 +1,9 @@
 
 
-
+lists = {};
 $(document).on('pageinit', function(){
 
-  lists = {};
+
 
   $("input[id=itemNameField]").focus(function() {
   $("#itemNameList").removeClass("ui-screen-hidden");
@@ -32,6 +32,15 @@ $(document).on("pagebeforeshow", "#pcreate_list", function(){
 
   generateItemList();
 
+
+});
+
+$(document).on("pagebeforeshow", "#pview_list", function(){
+
+
+  $("#viewListPageTitle").text(chosenList);
+  generateItemListView(chosenList);
+  $("#itemViewList").listview("refresh");
 
 });
 
@@ -65,12 +74,20 @@ function generateLists(){
 
     //var itemIdNumber = 0;
     for (var list in lists){
-      output += "<li><a class='" + list + "' href='#' onclick=''>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list]).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
+      output += "<li><a class='" + list + "' href='#' onclick='viewList(this)'>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list]).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
 
       //itemIdNumber += 1;
     }
     $("#listslist").append(output);
     $("#listslist").listview("refresh");
+
+}
+
+chosenList = 0;
+
+function viewList(obj){
+  chosenList = getName(obj);
+  $.mobile.changePage("#pview_list");
 
 }
 
@@ -142,6 +159,35 @@ function generateItemList(){
   }
   $("#itemList").append(output);
   $("#itemList").listview("refresh");
+}
+
+function generateItemListView(aList){
+  var output = "";
+  $("#itemViewList").empty();
+  var items = lists[aList];
+  //var itemIdNumber = 0;
+  for (var item in items){
+
+    output += "<li><a class='" + item + "'  href='#' onclick='strikeThrough(this)'>" + item + "<span class='ui-li-count'>x" + items[item] + "</span></a></li>";
+
+    //itemIdNumber += 1;
+  }
+  $("#itemViewList").append(output);
+  //$("#itemViewList").listview("refresh");
+}
+
+function strikeThrough(obj){
+  if ($(obj).hasClass("strike_through")) {
+    $(obj).removeClass("strike_through");
+    $(obj).buttonMarkup({ icon: "" });
+  }else {
+    $(obj).addClass("strike_through");
+    $(obj).addClass("ui-btn-icon-right");
+
+    $(obj).buttonMarkup({ icon: "check" });
+
+  }
+
 }
 
 itemToEdit = 0;
