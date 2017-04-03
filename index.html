@@ -30,7 +30,7 @@
     <div class="footer" data-role="footer" >
 
 
-      <a href="#pcreate_list" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
+      <a href="#" onclick="goToCreateListPage()" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Create List</a>
 
     </div>
 
@@ -50,7 +50,7 @@
   <div data-role="page" id="pcreate_list">
     <div data-role="header">
 
-      <h1 class="pageTitle">Create List</h1>
+      <h1 id="pcreate_list_title" class="pageTitle">Create List</h1>
       <input id="listNameField" type="text" name="list_name" placeholder="Name of list">
     </div>
 
@@ -148,7 +148,7 @@
 
       <a href="#home" data-role="button" data-theme="a" data-icon="back" class="">Back</a>
       <button onclick="deleteViewedList()" class="ui-btn ui-btn-a  ui-corner-all ui-shadow ui-icon-delete ui-btn-icon-right">Delete List</button>
-      <button onclick="" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-edit ui-btn-icon-right">Edit List</button>
+      <button onclick="editViewedList()" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-edit ui-btn-icon-right">Edit List</button>
       <!-- <p>
         In THIS PAGE
       </p> -->

@@ -30,6 +30,7 @@ $(document).on("pagebeforeshow", "#home", function(){
 
 $(document).on("pagebeforeshow", "#pcreate_list", function(){
 
+
   generateItemList();
 
 
@@ -43,10 +44,10 @@ $(document).on("pagebeforeshow", "#pview_list", function(){
   $("#itemViewList").listview("refresh");
 
 });
-
+chosenItems = {};
 $(document).on("pageinit", "#pcreate_list", function(){
 
-  chosenItems = {};
+
 
   $( "#add_item_popup" ).on( "popupbeforeposition", function( event, ui ) {
 
@@ -66,6 +67,52 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 
 });
+
+//listToEdit = 0;
+function editViewedList(){
+  viewedList = $("#viewListPageTitle").text();
+  $("#pcreate_list_title").text("Edit List");
+  $("#listNameField").val(viewedList);
+  $("#createListButton").attr('onclick', 'saveEditedList()');
+  chosenItems = lists[viewedList];
+  $.mobile.changePage("#pcreate_list");
+
+}
+
+function saveEditedList(){
+
+  listName = $("#listNameField").val().trim();
+  if (!listName){
+
+    $("#no_name_popup").popup("open");
+  } else {
+
+    if (listName in lists) {
+      lists[listName] = chosenItems;
+    } else {
+      delete lists[viewedList];
+      lists[listName] = chosenItems;
+    }
+
+
+
+    $.mobile.changePage( "#home");
+
+    $( "#listNameField" ).val("");
+    chosenItems = {};
+    alert(JSON.stringify(lists));
+  }
+
+}
+
+function goToCreateListPage(){
+  chosenItems = {};
+  $("#pcreate_list_title").text("Create List");
+  $("#listNameField").val("");
+  $("#createListButton").attr('onclick', 'createList()');
+  $.mobile.changePage("#pcreate_list");
+}
+
 
 function deleteViewedList(){
   var viewedList = $("#viewListPageTitle").text();
@@ -181,6 +228,20 @@ function generateItemListView(aList){
   $("#itemViewList").append(output);
   //$("#itemViewList").listview("refresh");
 }
+
+// function generateEditItemList(aList){
+//   var output = "";
+//   $("#itemList").empty();
+//   var items = lists[aList];
+//   //var itemIdNumber = 0;
+//   for (var item in items){
+//
+// output += "<li><a class='" + item + "' href='#' onclick='prepareEditItem(this)'>" + item + "<span class='ui-li-count'>x" + chosenItems[item] + "</span></a><a class='" + item + "' href='#confirm_del_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
+//     //itemIdNumber += 1;
+//   }
+//   $("#itemList").append(output);
+//   //$("#itemViewList").listview("refresh");
+// }
 
 function strikeThrough(obj){
   if ($(obj).hasClass("strike_through")) {
