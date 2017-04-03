@@ -71,7 +71,7 @@
 
   <div data-role="page" id="pcreate_list">
     <div data-role="header">
-      <a href="#home" data-role="button" data-theme="a" data-icon="home" class="ui-btn-right">Home</a>
+      <a href="#confirm_leave_popup_home" data-rel="popup" data-role="button" data-theme="a" data-icon="home" class="ui-btn-right">Home</a>
       <h1 id="pcreate_list_title" class="pageTitle">Create List</h1>
       <input id="listNameField" type="text" name="list_name" placeholder="Name of list">
     </div>
@@ -117,6 +117,17 @@
 
         <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="confirmLeave()">Yes</button>
         <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#confirm_leave_popup').popup('close');">No</button>
+      </div>
+
+      <div data-role="popup" id="confirm_leave_popup_home" data-position-to="window" data-transition="pop">
+
+        <h3>Are you sure you want to leave?</h3>
+        <p>
+          Changes will be lost
+        </p>
+
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="confirmLeaveHome()">Yes</button>
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#confirm_leave_popup_home').popup('close');">No</button>
       </div>
 
       <!-- CONFIRM ITEM DELETE POPUP -->

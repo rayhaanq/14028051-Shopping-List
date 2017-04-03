@@ -7,6 +7,8 @@ chosenList = 0;
 objToDelete = 0;
 listToEdit = 0;
 
+
+
 suggestedItems = ["Apples", "Apricot", "Aubergine", " Banana", "Beetroot", "Carrot", "Courgette", "Chive", "Fennel", "Potatoes", "Strawberries"];
 
 $(document).on('pageinit', function(){
@@ -60,6 +62,7 @@ $(document).on("pagebeforeshow", "#pcreate_list", function(){
 
   generateItemList();
 
+  console.log(chosenItems);
 
 });
 
@@ -68,6 +71,7 @@ $(document).on("pagebeforeshow", "#pview_list", function(){
 
   $("#viewListPageTitle").text(chosenList);
   generateItemListView(chosenList);
+  setupAllStrikes();
   $("#itemViewList").listview("refresh");
 
 });
@@ -104,6 +108,11 @@ function confirmLeave(){
 
 }
 
+function confirmLeaveHome(){
+  $.mobile.changePage("#home");
+
+}
+
 function generateSuggestedItems(){
 
   $("#itemNameList").empty();
@@ -130,7 +139,7 @@ function editViewedList(){
   $("#pcreate_list_title").text("Edit List");
   $("#listNameField").val(viewedList);
   $("#createListButton").attr('onclick', 'saveEditedList()');
-  chosenItems = lists[viewedList];
+  chosenItems = lists[viewedList].items;
   $.mobile.changePage("#pcreate_list");
 
 }
@@ -139,7 +148,7 @@ function editList(aList){
   $("#pcreate_list_title").text("Edit List");
   $("#listNameField").val(aList);
   $("#createListButton").attr('onclick', 'saveEditedList()');
-  chosenItems = lists[aList];
+  chosenItems = lists[aList].items;
   $.mobile.changePage("#pcreate_list");
 
 }
@@ -153,10 +162,10 @@ function saveEditedList(){
   } else {
 
     if (listName in lists) {
-      lists[listName] = chosenItems;
+      lists[listName].items = chosenItems;
     } else {
       delete lists[viewedList];
-      lists[listName] = chosenItems;
+      lists[listName].items = chosenItems;
     }
 
 
@@ -191,7 +200,7 @@ function generateLists(){
 
     //var itemIdNumber = 0;
     for (var list in lists){
-      output += "<li><a class='" + list + " aListLink' href='#' onclick='viewList(this)'>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list]).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
+      output += "<li><a class='" + list + " aListLink' href='#' onclick='viewList(this)'>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list].items).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
 
       //itemIdNumber += 1;
     }
@@ -200,9 +209,10 @@ function generateLists(){
 
 }
 
-
+selectedList = 0;
 
 function viewList(obj){
+  selectedList = obj;
   chosenList = getName(obj);
   $.mobile.changePage("#pview_list");
 
@@ -228,8 +238,14 @@ function createList(){
 
     $("#no_name_popup").popup("open");
   } else {
+    newList = new Object();
+    newList.name = listName;
+    newList.items = chosenItems;
+    newList.checkedItems = new Array();
+    lists[listName] = newList;
 
-    lists[listName] = chosenItems;
+    //lists[listName].items = chosenItems;
+    //lists[listName].checkedItems = new Array();
     addToSuggestedItems();
     $.mobile.changePage( "#home");
 
@@ -289,18 +305,21 @@ function generateItemList(){
 
 function generateItemListView(aList){
   var output = "";
+
+
   $("#itemViewList").empty();
-  var items = lists[aList];
+  var items = lists[aList].items;
   //var itemIdNumber = 0;
   for (var item in items){
 
-    output += "<li><a class='" + item + "'  href='#' onclick='strikeThrough(this)'>" + item + "<span class='ui-li-count'>x" + items[item] + "</span></a></li>";
+    output += "<li><a id='" + item + "' class='" + item + "'  href='#' onclick='strikeThrough(this)'>" + item + "<span class='ui-li-count'>x" + items[item] + "</span></a></li>";
 
     //itemIdNumber += 1;
   }
   $("#itemViewList").append(output);
   //$("#itemViewList").listview("refresh");
 }
+
 
 // function generateEditItemList(aList){
 //   var output = "";
@@ -317,20 +336,63 @@ function generateItemListView(aList){
 // }
 
 function strikeThrough(obj){
+  var thisList = $("#viewListPageTitle").text();
+
+  aCheckedItem = getName(obj);
+
+  if ($(obj).hasClass("strike_through")) {
+    $(obj).removeClass("strike_through");
+    $(obj).buttonMarkup({ icon: "" });
+    lists[thisList].checkedItems.splice($.inArray(obj, lists[thisList].checkedItems),1);
+  }else {
+    $(obj).addClass("strike_through");
+    $(obj).addClass("ui-btn-icon-right");
+    $(obj).buttonMarkup({ icon: "check" });
+
+
+    lists[thisList].checkedItems.push(obj);
+
+  }
+//console.log(lists[thisList].checkedItems[0]);
+//  console.log(lists[thisList].checkedItems);
+}
+
+function strikeThrough2(obj){
+  var thisList = $("#viewListPageTitle").text();
+
+//console.log(obj);
+
+  aCheckedItem = getName(obj);
+
   if ($(obj).hasClass("strike_through")) {
     $(obj).removeClass("strike_through");
     $(obj).buttonMarkup({ icon: "" });
   }else {
     $(obj).addClass("strike_through");
     $(obj).addClass("ui-btn-icon-right");
-
     $(obj).buttonMarkup({ icon: "check" });
 
   }
 
+  $("#itemViewList").listview("refresh");
+
+  //console.log(lists[thisList].checkedItems);
 }
 
+function setupAllStrikes(){
+  var checkedItemsLength = lists[chosenList].checkedItems.length;
 
+    for(var i = 0; i<checkedItemsLength;i++){
+       var listItem = lists[chosenList].checkedItems[i];
+       var listElement = $("#" + getName(listItem));
+
+       listElement.addClass("strike_through");
+       listElement.buttonMarkup({ icon: "check" });
+       $("#itemViewList").listview("refresh");
+
+
+     }
+}
 
 function prepareEditItem(obj){
 
@@ -382,9 +444,17 @@ function editItem (){
 
 
 function getName(obj){
-  var classes= $(obj).attr("class");
+  var classes = 0;
+  if ($(obj).attr("class") == 0){
+    classes = obj;
+  } else {
+    classes= $(obj).attr("class");
 
-  classes = classes.substring(0, classes.indexOf(' '));
+    try {
+      classes = classes.substring(0, classes.indexOf(' '));
+    } catch (e) {}
+
+  }
 
   return classes;
 }
