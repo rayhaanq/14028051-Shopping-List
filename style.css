@@ -20,6 +20,13 @@
     padding: 10px 20px;
 }
 
+#confirm_leave_popup{
+    padding: 10px 20px;
+    text-align: center;
+}
+
+
+
 #addItemSubmit{
   width: 75%;
   margin: auto;

@@ -98,6 +98,12 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 });
 
+function confirmLeave(){
+  $('#confirm_leave_popup').popup('close');
+  $.mobile.back();
+
+}
+
 function generateSuggestedItems(){
 
   $("#itemNameList").empty();

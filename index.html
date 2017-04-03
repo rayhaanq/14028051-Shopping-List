@@ -97,7 +97,7 @@
     <div class="footer" data-role="footer" >
 
 
-      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="back" >Back</a>
+      <a href="#confirm_leave_popup" data-rel="popup" data-role="button" data-theme="a" data-icon="back" >Back</a>
       <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
       <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
 
@@ -106,6 +106,17 @@
         <p>Please add a list name</p>
 
         <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#no_name_popup').popup('close');">Ok</button>
+      </div>
+
+      <div data-role="popup" id="confirm_leave_popup" data-position-to="window" data-transition="pop">
+
+        <h3>Are you sure you want to leave?</h3>
+        <p>
+          Changes will be lost
+        </p>
+
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="confirmLeave()">Yes</button>
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#confirm_leave_popup').popup('close');">No</button>
       </div>
 
       <!-- CONFIRM ITEM DELETE POPUP -->
