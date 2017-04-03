@@ -1,6 +1,12 @@
 
 
 lists = {};
+
+itemToEdit = 0;
+chosenList = 0;
+objToDelete = 0;
+listToEdit = 0;
+
 $(document).on('pageinit', function(){
 
 
@@ -26,7 +32,26 @@ $(document).on("pagebeforeshow", "#home", function(){
   generateLists();
 
 
+  $( "#hardPress_menu" ).on( "popupafterclose", function( event, ui ) {
+
+    $("#deleteListLI").collapsible({collapsed: true});
+
+  } );
+
+
 });
+
+$(document).on( "taphold", ".aListLink", function( event ) {
+
+   listToEdit = getName($(event.target));
+   chosenList = $(event.target);
+   objToDelete = $(event.target);
+
+  $("#hardPress_menu").popup("open");
+  alert(JSON.stringify(lists));
+
+
+} );
 
 $(document).on("pagebeforeshow", "#pcreate_list", function(){
 
@@ -68,13 +93,21 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 });
 
-//listToEdit = 0;
 function editViewedList(){
   viewedList = $("#viewListPageTitle").text();
   $("#pcreate_list_title").text("Edit List");
   $("#listNameField").val(viewedList);
   $("#createListButton").attr('onclick', 'saveEditedList()');
   chosenItems = lists[viewedList];
+  $.mobile.changePage("#pcreate_list");
+
+}
+
+function editList(aList){
+  $("#pcreate_list_title").text("Edit List");
+  $("#listNameField").val(aList);
+  $("#createListButton").attr('onclick', 'saveEditedList()');
+  chosenItems = lists[aList];
   $.mobile.changePage("#pcreate_list");
 
 }
@@ -100,7 +133,6 @@ function saveEditedList(){
 
     $( "#listNameField" ).val("");
     chosenItems = {};
-    alert(JSON.stringify(lists));
   }
 
 }
@@ -127,7 +159,7 @@ function generateLists(){
 
     //var itemIdNumber = 0;
     for (var list in lists){
-      output += "<li><a class='" + list + "' href='#' onclick='viewList(this)'>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list]).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
+      output += "<li><a class='" + list + " aListLink' href='#' onclick='viewList(this)'>" + list + "<span class='ui-li-count'>" + Object.keys(lists[list]).length + " item(s)</span></a><a class='" + list + "' href='#confirm_del_list_popup' data-rel='popup' onclick='setObjectToDelete(this)'></a></li>";
 
       //itemIdNumber += 1;
     }
@@ -136,7 +168,7 @@ function generateLists(){
 
 }
 
-chosenList = 0;
+
 
 function viewList(obj){
   chosenList = getName(obj);
@@ -148,6 +180,12 @@ function deleteList(){
   $(objToDelete).closest("li").remove();
   delete lists[getName(objToDelete)];
   $('#confirm_del_list_popup').popup('close');
+}
+
+function deleteListHardPress(){
+  $(objToDelete).closest("li").remove();
+  delete lists[getName(objToDelete)];
+  $('#hardPress_menu').popup('close');
 }
 
 
@@ -257,7 +295,7 @@ function strikeThrough(obj){
 
 }
 
-itemToEdit = 0;
+
 
 function prepareEditItem(obj){
 
@@ -316,7 +354,7 @@ function getName(obj){
   return classes;
 }
 
-objToDelete = 0;
+
 
 function deleteItem() {
 

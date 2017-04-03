@@ -36,11 +36,33 @@
 
     <div data-role="popup" id="confirm_del_list_popup" data-position-to="window" data-transition="pop">
 
-      <h3>Delete item?</h3>
+      <h3>Delete list?</h3>
 
       <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="deleteList()">Yes</button>
       <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#confirm_del_list_popup').popup('close');">No</button>
     </div>
+
+    <div data-role="popup" id="hardPress_menu" data-position-to="window" data-transition="pop">
+
+      <ul data-role="listview" data-inset="true" data-theme="b" data-shadow="false" >
+            <li data-role="list-divider" style="text-align:center;">Options</li>
+            <li><a href="#" onclick="viewList(chosenList)">View List</a></li>
+            <li><a href="#" class="ui-icon-edit" onclick="editList(listToEdit)">Edit List</a></li>
+            <li id="deleteListLI"  data-role="collapsible" data-collapsed="true" data-icon="delete" data-inset="false" data-icon="delete" data-iconpos="right">
+              <h2 id="deleteListh2" >Delete List</h2>
+                <ul id="asd"data-role="listview" style="text-align:center;" >
+                  <!-- <li><a href="#">Yes</a></li>
+                  <li><a href="#">No</a></li> -->
+                  <p>Are you sure?</p>
+                  <fieldset data-role="controlgroup" data-type="horizontal" >
+                    <button onclick="deleteListHardPress()">Yes</button>
+                    <button onclick="$('#hardPress_menu').popup('close');">No</button>
+                  </fieldset>
+                </ul>
+            </li>
+        </ul>
+
+      </div>
 
   </div>
 
@@ -49,7 +71,7 @@
 
   <div data-role="page" id="pcreate_list">
     <div data-role="header">
-
+      <a href="#home" data-role="button" data-theme="a" data-icon="home" class="ui-btn-right">Home</a>
       <h1 id="pcreate_list_title" class="pageTitle">Create List</h1>
       <input id="listNameField" type="text" name="list_name" placeholder="Name of list">
     </div>
@@ -74,7 +96,8 @@
 
     <div class="footer" data-role="footer" >
 
-      <a href="#home" data-role="button" data-theme="a" data-icon="back" >Back</a>
+
+      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="back" >Back</a>
       <button id="createListButton" onclick="createList()" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-check ui-btn-icon-right">Save List</button>
       <a href="#add_item_popup" data-rel="popup" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-icon-plus ui-btn-icon-right">Add Item</a>
 
