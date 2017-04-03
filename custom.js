@@ -7,6 +7,8 @@ chosenList = 0;
 objToDelete = 0;
 listToEdit = 0;
 
+suggestedItems = ["Apples", "Apricot", "Aubergine", " Banana", "Beetroot", "Carrot", "Courgette", "Chive", "Fennel", "Potatoes", "Strawberries"];
+
 $(document).on('pageinit', function(){
 
 
@@ -69,6 +71,7 @@ $(document).on("pagebeforeshow", "#pview_list", function(){
   $("#itemViewList").listview("refresh");
 
 });
+
 chosenItems = {};
 $(document).on("pageinit", "#pcreate_list", function(){
 
@@ -77,6 +80,8 @@ $(document).on("pageinit", "#pcreate_list", function(){
   $( "#add_item_popup" ).on( "popupbeforeposition", function( event, ui ) {
 
     $("#invalidItem").text("");
+
+    generateSuggestedItems();
 
   });
 
@@ -92,6 +97,27 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 
 });
+
+function generateSuggestedItems(){
+
+  $("#itemNameList").empty();
+  var output = "";
+
+  for (var item in suggestedItems){
+    output += "<li><a href='#' onclick='setItemName(this)'>" + suggestedItems[item] + "</a></li>";
+  }
+  $("#itemNameList").append(output);
+  $("#itemNameList").listview("refresh");
+
+}
+
+function addToSuggestedItems(){
+  for(var item in chosenItems){
+    if ($.inArray(item, suggestedItems) == -1){
+      suggestedItems.push(item);
+    }
+  }
+}
 
 function editViewedList(){
   viewedList = $("#viewListPageTitle").text();
@@ -198,6 +224,7 @@ function createList(){
   } else {
 
     lists[listName] = chosenItems;
+    addToSuggestedItems();
     $.mobile.changePage( "#home");
 
     $( "#listNameField" ).val("");
@@ -224,6 +251,8 @@ function addItem(){
   //   });
   } else {
     chosenItems[itemName] = quantity;
+
+
 
     $( "#add_item_popup" ).popup("close");
 
