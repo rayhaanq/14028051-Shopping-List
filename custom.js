@@ -67,6 +67,12 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 });
 
+function deleteViewedList(){
+  var viewedList = $("#viewListPageTitle").text();
+  delete lists[viewedList];
+  $.mobile.changePage("#home");
+}
+
 function generateLists(){
 
     var output = "";
