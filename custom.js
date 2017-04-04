@@ -1,6 +1,10 @@
 
 
-lists = {};
+if(localStorage.getItem("lists") !== null){
+  lists = JSON.parse(localStorage.getItem("lists"));
+} else {
+  lists = {};
+}
 
 itemToEdit = 0;
 chosenList = 0;
@@ -12,6 +16,7 @@ listToEdit = 0;
 suggestedItems = ["Apples", "Apricot", "Aubergine", " Banana", "Beetroot", "Carrot", "Courgette", "Chive", "Fennel", "Potatoes", "Strawberries"];
 
 $(document).on('pageinit', function(){
+
 
 
 
@@ -35,6 +40,7 @@ $(document).on("pagebeforeshow", "#home", function(){
 
   generateLists();
 
+  getListByName("aName");
 
   $( "#hardPress_menu" ).on( "popupafterclose", function( event, ui ) {
 
@@ -51,32 +57,45 @@ $(document).on( "taphold", ".aListLink", function( event ) {
    chosenList = $(event.target);
    objToDelete = $(event.target);
 
+   localStorage.setItem("listToEdit", JSON.stringify(listToEdit));
   $("#hardPress_menu").popup("open");
-  alert(JSON.stringify(lists));
 
 
 } );
 
 $(document).on("pagebeforeshow", "#pcreate_list", function(){
 
+  if(localStorage.getItem("listToEdit") !== null){
+    listToEdit = JSON.parse(localStorage.getItem("listToEdit"));
 
+    $("#pcreate_list_title").text("Edit List");
+    $("#listNameField").val(listToEdit);
+    $("#createListButton").attr('onclick', 'saveEditedList()');
+    chosenItems = lists[listToEdit].items;
+    localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
+  }
+
+  chosenItems = JSON.parse(localStorage.getItem("chosenItems"));
   generateItemList();
 
-  console.log(chosenItems);
 
 });
 
 $(document).on("pagebeforeshow", "#pview_list", function(){
 
+  if (localStorage.getItem("chosenList") !== null){
+    chosenList = JSON.parse(localStorage.getItem("chosenList"));
+  }
 
   $("#viewListPageTitle").text(chosenList);
-  generateItemListView(chosenList);
+  generateItemListView(getListByName(chosenList));
   setupAllStrikes();
   $("#itemViewList").listview("refresh");
 
 });
 
 chosenItems = {};
+
 $(document).on("pageinit", "#pcreate_list", function(){
 
 
@@ -106,6 +125,22 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
 
 });
+
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+function getListByName(aListName){
+  var found = 0;
+
+  for (list in lists){
+    if(lists[list].name === aListName){
+      found = lists[list].name;
+    }
+  }
+
+  return found;
+}
 
 function confirmLeave(){
   $('#confirm_leave_popup').popup('close');
@@ -142,10 +177,13 @@ function addToSuggestedItems(){
 
 function editViewedList(){
   viewedList = $("#viewListPageTitle").text();
+  listToEdit = $("#viewListPageTitle").text();
   $("#pcreate_list_title").text("Edit List");
   $("#listNameField").val(viewedList);
   $("#createListButton").attr('onclick', 'saveEditedList()');
   chosenItems = lists[viewedList].items;
+  localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
+  localStorage.setItem("listToEdit", JSON.stringify(listToEdit));
   $.mobile.changePage("#pcreate_list");
 
 }
@@ -155,6 +193,7 @@ function editList(aList){
   $("#listNameField").val(aList);
   $("#createListButton").attr('onclick', 'saveEditedList()');
   chosenItems = lists[aList].items;
+  localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
   $.mobile.changePage("#pcreate_list");
 
 }
@@ -169,9 +208,13 @@ function saveEditedList(){
 
     if (listName in lists) {
       lists[listName].items = chosenItems;
+      localStorage.setItem("lists", JSON.stringify(lists));
+
     } else {
       delete lists[viewedList];
+      lists[listName].name = listName;
       lists[listName].items = chosenItems;
+      localStorage.setItem("lists", JSON.stringify(lists));
     }
 
 
@@ -180,12 +223,15 @@ function saveEditedList(){
 
     $( "#listNameField" ).val("");
     chosenItems = {};
+    localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
   }
 
 }
 
 function goToCreateListPage(){
   chosenItems = {};
+  localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
+  localStorage.removeItem("listToEdit");
   $("#pcreate_list_title").text("Create List");
   $("#listNameField").val("");
   $("#createListButton").attr('onclick', 'createList()');
@@ -196,6 +242,7 @@ function goToCreateListPage(){
 function deleteViewedList(){
   var viewedList = $("#viewListPageTitle").text();
   delete lists[viewedList];
+  localStorage.setItem("lists", JSON.stringify(lists));
   $.mobile.changePage("#home");
 }
 
@@ -220,6 +267,7 @@ selectedList = 0;
 function viewList(obj){
   selectedList = obj;
   chosenList = getName(obj);
+  localStorage.setItem("chosenList", JSON.stringify(chosenList));
   $.mobile.changePage("#pview_list");
 
 }
@@ -227,12 +275,14 @@ function viewList(obj){
 function deleteList(){
   $(objToDelete).closest("li").remove();
   delete lists[getName(objToDelete)];
+  localStorage.setItem("lists", JSON.stringify(lists));
   $('#confirm_del_list_popup').popup('close');
 }
 
 function deleteListHardPress(){
   $(objToDelete).closest("li").remove();
   delete lists[getName(objToDelete)];
+  localStorage.setItem("lists", JSON.stringify(lists));
   $('#hardPress_menu').popup('close');
 }
 
@@ -249,6 +299,9 @@ function createList(){
     newList.items = chosenItems;
     newList.checkedItems = new Array();
     lists[listName] = newList;
+    localStorage.setItem("lists", JSON.stringify(lists));
+
+
 
     //lists[listName].items = chosenItems;
     //lists[listName].checkedItems = new Array();
@@ -279,7 +332,7 @@ function addItem(){
   //   });
   } else {
     chosenItems[itemName] = quantity;
-
+    localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
 
 
     $( "#add_item_popup" ).popup("close");
@@ -342,61 +395,49 @@ function generateItemListView(aList){
 // }
 
 function strikeThrough(obj){
-  var thisList = $("#viewListPageTitle").text();
+  var thisList = getListByName($("#viewListPageTitle").text());
 
   aCheckedItem = getName(obj);
 
   if ($(obj).hasClass("strike_through")) {
     $(obj).removeClass("strike_through");
     $(obj).buttonMarkup({ icon: "" });
-    lists[thisList].checkedItems.splice($.inArray(obj, lists[thisList].checkedItems),1);
+    lists[thisList].checkedItems.splice($.inArray(getName(obj), lists[thisList].checkedItems),1);
+    localStorage.setItem("lists", JSON.stringify(lists));
   }else {
     $(obj).addClass("strike_through");
     $(obj).addClass("ui-btn-icon-right");
     $(obj).buttonMarkup({ icon: "check" });
 
 
-    lists[thisList].checkedItems.push(obj);
+    lists[thisList].checkedItems.push(getName(obj));
+    localStorage.setItem("lists", JSON.stringify(lists));
+
+
 
   }
-//console.log(lists[thisList].checkedItems[0]);
-//  console.log(lists[thisList].checkedItems);
 }
 
-function strikeThrough2(obj){
-  var thisList = $("#viewListPageTitle").text();
-
-//console.log(obj);
-
-  aCheckedItem = getName(obj);
-
-  if ($(obj).hasClass("strike_through")) {
-    $(obj).removeClass("strike_through");
-    $(obj).buttonMarkup({ icon: "" });
-  }else {
-    $(obj).addClass("strike_through");
-    $(obj).addClass("ui-btn-icon-right");
-    $(obj).buttonMarkup({ icon: "check" });
-
-  }
-
-  $("#itemViewList").listview("refresh");
-
-  //console.log(lists[thisList].checkedItems);
-}
 
 function setupAllStrikes(){
-  var checkedItemsLength = lists[chosenList].checkedItems.length;
+
+
+
+  var checkedItemsLength = lists[getListByName(chosenList)].checkedItems.length;
 
     for(var i = 0; i<checkedItemsLength;i++){
-       var listItem = lists[chosenList].checkedItems[i];
-       var listElement = $("#" + getName(listItem));
+       //var listItem = lists[getListByName(chosenList)].checkedItems[i];
+       var listItem = lists[getListByName(chosenList)].checkedItems[i];
+       var listElement = $("#" + listItem);
+
+
 
        listElement.addClass("strike_through");
        listElement.buttonMarkup({ icon: "check" });
+       listElement.buttonMarkup({ iconpos: "right" });
        $("#itemViewList").listview("refresh");
 
-
+       localStorage.setItem("lists", JSON.stringify(lists));
      }
 }
 
@@ -429,9 +470,11 @@ function editItem (){
 
     if (itemName == itemToEdit){
       chosenItems[itemName] = quantity;
+      localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
     } else {
       delete chosenItems[itemToEdit];
       chosenItems[itemName] = quantity;
+      localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
     }
     $( "#add_item_popup" ).popup("close");
 
@@ -472,6 +515,7 @@ function deleteItem() {
 
   $(objToDelete).closest("li").remove();
   delete chosenItems[getName(objToDelete)];
+  localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
   $('#confirm_del_popup').popup('close');
 
 
