@@ -85,6 +85,11 @@ $(document).on("pageinit", "#pcreate_list", function(){
 
     $("#invalidItem").text("");
 
+    if(JSON.parse(localStorage.getItem("suggestedItems")) !== null){
+      suggestedItems = JSON.parse(localStorage.getItem("suggestedItems"));
+    }
+
+
     generateSuggestedItems();
 
   });
@@ -130,6 +135,7 @@ function addToSuggestedItems(){
   for(var item in chosenItems){
     if ($.inArray(item, suggestedItems) == -1){
       suggestedItems.push(item);
+      localStorage.setItem("suggestedItems", JSON.stringify(suggestedItems));
     }
   }
 }
