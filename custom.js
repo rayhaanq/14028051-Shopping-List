@@ -38,6 +38,12 @@ $(document).on('pageinit', function(){
 
 $(document).on("pagebeforeshow", "#home", function(){
 
+  if(isEmpty(lists)){
+    $("#emptyListsMsg").text("No lists");
+  } else{
+    $("#emptyListsMsg").text("");
+  }
+
   generateLists();
 
   getListByName("aName");
@@ -71,8 +77,8 @@ $(document).on("pagebeforeshow", "#pcreate_list", function(){
     $("#pcreate_list_title").text("Edit List");
     $("#listNameField").val(listToEdit);
     $("#createListButton").attr('onclick', 'saveEditedList()');
-    chosenItems = lists[listToEdit].items;
-    localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
+    //chosenItems = lists[listToEdit].items;
+  //  localStorage.setItem("chosenItems", JSON.stringify(chosenItems));
   }
 
   chosenItems = JSON.parse(localStorage.getItem("chosenItems"));
@@ -211,10 +217,13 @@ function saveEditedList(){
       localStorage.setItem("lists", JSON.stringify(lists));
 
     } else {
+
       delete lists[viewedList];
+      lists[listName] = new Object();
       lists[listName].name = listName;
       lists[listName].items = chosenItems;
       localStorage.setItem("lists", JSON.stringify(lists));
+
     }
 
 
@@ -401,11 +410,13 @@ function strikeThrough(obj){
 
   if ($(obj).hasClass("strike_through")) {
     $(obj).removeClass("strike_through");
+    $(obj).buttonMarkup({ theme: "a" });
     $(obj).buttonMarkup({ icon: "" });
     lists[thisList].checkedItems.splice($.inArray(getName(obj), lists[thisList].checkedItems),1);
     localStorage.setItem("lists", JSON.stringify(lists));
   }else {
     $(obj).addClass("strike_through");
+    $(obj).buttonMarkup({ theme: "b" });
     $(obj).addClass("ui-btn-icon-right");
     $(obj).buttonMarkup({ icon: "check" });
 
@@ -421,9 +432,13 @@ function strikeThrough(obj){
 
 function setupAllStrikes(){
 
-
-
+try {
   var checkedItemsLength = lists[getListByName(chosenList)].checkedItems.length;
+} catch (e) {
+  lists[getListByName(chosenList)].checkedItems = new Array();
+  var checkedItemsLength = 0;
+}
+
 
     for(var i = 0; i<checkedItemsLength;i++){
        //var listItem = lists[getListByName(chosenList)].checkedItems[i];
@@ -433,6 +448,7 @@ function setupAllStrikes(){
 
 
        listElement.addClass("strike_through");
+       listElement.buttonMarkup({ theme: "b" });
        listElement.buttonMarkup({ icon: "check" });
        listElement.buttonMarkup({ iconpos: "right" });
        $("#itemViewList").listview("refresh");

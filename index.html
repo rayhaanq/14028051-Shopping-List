@@ -18,10 +18,11 @@
   <!-- HOME PAGE -->
   <div data-role="page" id="home">
     <div data-role="header">
-      <h1>Shopping List App</h1>
+      <h1>Lists</h1>
     </div>
 
   <div data-role="main" class="ui-content">
+    <p style="text-align:center;" id="emptyListsMsg"></p>
     <ul id="listslist" data-role="listview" data-split-icon="delete" data-count-theme="b"  data-inset="true">
 
     </ul>
@@ -73,12 +74,15 @@
     <div data-role="header">
       <a href="#confirm_leave_popup_home" data-rel="popup" data-role="button" data-theme="a" data-icon="home" class="ui-btn-right">Home</a>
       <h1 id="pcreate_list_title" class="pageTitle">Create List</h1>
-      <input id="listNameField" type="text" name="list_name" placeholder="Name of list">
+
+
+        <input id="listNameField"  type="text" name="list_name" placeholder="Name of list">
+
+
     </div>
 
   <div data-role="main" class="ui-content">
     <div>
-
 
     <ul data-role="listview" data-split-icon="delete" data-count-theme="b" id="itemList" data-inset="true">
       <!-- <li><a href="#">item1 <span class="ui-li-count">x12</span></a>
@@ -176,10 +180,12 @@
   <div data-role="page" id="pview_list">
     <div data-role="header">
 
-      <h1 id="viewListPageTitle"></h1>
+      <h1>View List</h1>
     </div>
 
   <div data-role="main" class="ui-content">
+
+    <h1 style="text-align:center;" id="viewListPageTitle"></h1>
     <div>
 
     <ul data-role="listview"  data-icon='false' data-count-theme="b" id="itemViewList" data-inset="true">
@@ -192,11 +198,16 @@
     <div class="footer" data-role="footer" >
 
       <a href="#home" data-role="button" data-theme="a" data-icon="back" class="">Back</a>
-      <button onclick="deleteViewedList()" class="ui-btn ui-btn-a  ui-corner-all ui-shadow ui-icon-delete ui-btn-icon-right">Delete List</button>
+      <a href="#deleteViewedList_popup" data-role="button" data-theme="a" data-icon="delete" data-rel="popup" class="">Delete List</a>
       <button onclick="editViewedList()" class="ui-btn ui-btn-b  ui-corner-all ui-shadow ui-icon-edit ui-btn-icon-right">Edit List</button>
-      <!-- <p>
-        In THIS PAGE
-      </p> -->
+
+      <div data-role="popup" id="deleteViewedList_popup" data-position-to="window" data-transition="pop">
+
+        <h3>Delete list?</h3>
+
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="deleteViewedList()">Yes</button>
+        <button type="button" class="ui-btn ui-btn-b ui-shadow ui-corner-all" onclick="$('#confirm_del_list_popup').popup('close');">No</button>
+      </div>
 
 
     </div>
